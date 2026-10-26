@@ -1,4 +1,8 @@
 /* Basic Style */
+/* index.html declares a doctype, so the browser renders the page in standards mode.
+   In quirks mode Chrome made text inputs box-sizing: border-box and left no descender
+   gap under inline images; the geometry here was written for those values, so they are
+   declared explicitly instead of relying on the document being invalid. */
 body {
   background-color: #f8f8f8;
   color: #333;
@@ -12,6 +16,7 @@ body {
 }
 .matrix-banner img {
   width: 100%;
+  vertical-align: bottom;
 }
 .matrix-banner .more-info {
   font-family: fantasy, cursive;
@@ -71,6 +76,7 @@ label[for="new-task"] {
   text-transform: uppercase;
 }
 input[type="text"] {
+  box-sizing: border-box;
   margin: 0;
   font-size: 18px;
   line-height: 18px;
@@ -122,6 +128,7 @@ li > input[type="text"] {
   width: 226px;
 }
 button.delete img {
+  vertical-align: bottom;
   height: 2em;
   transform: rotateZ(45deg);
   transition: transform 200ms ease-in;
