@@ -65,7 +65,6 @@ const toggleTaskCompletion = function () {
   const listItem = this.parentNode;
   const targetList = this.checked ? completedList : todoList;
   targetList.appendChild(listItem);
-  bindTaskEvents(listItem);
 };
 
 addButton.addEventListener("click", addTask);
