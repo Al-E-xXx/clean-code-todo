@@ -1,0 +1,20 @@
+{
+  "name": "clean-code-todo",
+  "version": "1.0.0",
+  "description": "Vanilla JS TODO app",
+  "main": "app.js",
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10"
+  }
+}
