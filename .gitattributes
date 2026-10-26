@@ -1,0 +1,2 @@
+# Git hooks must keep LF: sh on Windows cannot run a hook written with CRLF.
+.husky/* text eol=lf
