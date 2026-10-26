@@ -60,7 +60,7 @@ const addTask = function () {
 
   //Append listItem to incompleteTaskHolder
   incompleteTaskHolder.appendChild(listItem);
-  bindTaskEvents(listItem, toggleTaskCompletion);
+  bindTaskEvents(listItem);
 
   taskInput.value = "";
 };
@@ -102,7 +102,7 @@ const toggleTaskCompletion = function () {
   const listItem = this.parentNode;
   const targetList = this.checked ? completedTasksHolder : incompleteTaskHolder;
   targetList.appendChild(listItem);
-  bindTaskEvents(listItem, toggleTaskCompletion);
+  bindTaskEvents(listItem);
 };
 
 //The glue to hold it all together.
@@ -110,7 +110,7 @@ const toggleTaskCompletion = function () {
 //Set the click handler to the addTask function.
 addButton.addEventListener("click", addTask);
 
-const bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
+const bindTaskEvents = function (taskListItem) {
   //select ListItems children
   const checkBox = taskListItem.querySelector("input[type=checkbox]");
   const editButton = taskListItem.querySelector("button.edit");
@@ -120,21 +120,16 @@ const bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
   editButton.onclick = editTask;
   //Bind deleteTask to delete button.
   deleteButton.onclick = deleteTask;
-  //Bind checkBoxEventHandler to the checkbox.
-  checkBox.onchange = checkBoxEventHandler;
+  //Bind toggleTaskCompletion to the checkbox.
+  checkBox.onchange = toggleTaskCompletion;
 };
 
-//cycle over incompleteTaskHolder ul list items
-//for each list item
-for (let i = 0; i < incompleteTaskHolder.children.length; i++) {
-  //bind events to list items chldren
-  bindTaskEvents(incompleteTaskHolder.children[i], toggleTaskCompletion);
-}
-
-//cycle over completedTasksHolder ul list items
-for (let j = 0; j < completedTasksHolder.children.length; j++) {
-  //bind events to list items chldren
-  bindTaskEvents(completedTasksHolder.children[j], toggleTaskCompletion);
+//Bind events to every preloaded list item, in both lists.
+const taskLists = [incompleteTaskHolder, completedTasksHolder];
+for (const taskList of taskLists) {
+  for (let i = 0; i < taskList.children.length; i++) {
+    bindTaskEvents(taskList.children[i]);
+  }
 }
 
 // Issues with usability don't get seen until they are in front of a human tester.
