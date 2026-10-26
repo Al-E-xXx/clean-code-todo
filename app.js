@@ -3,36 +3,26 @@ const addButton = document.getElementsByTagName("button")[0];
 const todoList = document.getElementById("incompleteTasks");
 const completedList = document.getElementById("completed-tasks");
 
+const createChild = function (parent, tag, { type, className, text, src }) {
+  const element = document.createElement(tag);
+  if (type !== undefined) element.type = type;
+  if (className !== undefined) element.className = className;
+  if (text !== undefined) element.innerText = text; //innerText encodes special characters, HTML does not.
+  if (src !== undefined) element.src = src;
+  parent.appendChild(element);
+  return element;
+};
+
 const createNewTaskElement = function (taskText) {
   const listItem = document.createElement("li");
 
-  const checkBox = document.createElement("input");
-  const label = document.createElement("label");
-  const editInput = document.createElement("input");
-  const editButton = document.createElement("button");
+  createChild(listItem, "input", { type: "checkbox" });
+  createChild(listItem, "label", { className: "task", text: taskText });
+  createChild(listItem, "input", { type: "text", className: "task" });
+  createChild(listItem, "button", { className: "edit", text: "Edit" });
+  const deleteButton = createChild(listItem, "button", { className: "delete" });
+  createChild(deleteButton, "img", { src: "./remove.svg" });
 
-  const deleteButton = document.createElement("button");
-  const deleteIcon = document.createElement("img");
-
-  label.innerText = taskText;
-  label.className = "task";
-
-  checkBox.type = "checkbox";
-  editInput.type = "text";
-  editInput.className = "task";
-
-  editButton.innerText = "Edit"; //innerText encodes special characters, HTML does not.
-  editButton.className = "edit";
-
-  deleteButton.className = "delete";
-  deleteIcon.src = "./remove.svg";
-  deleteButton.appendChild(deleteIcon);
-
-  listItem.appendChild(checkBox);
-  listItem.appendChild(label);
-  listItem.appendChild(editInput);
-  listItem.appendChild(editButton);
-  listItem.appendChild(deleteButton);
   return listItem;
 };
 
