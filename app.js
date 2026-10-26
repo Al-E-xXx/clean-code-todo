@@ -9,11 +9,11 @@
 
 const taskInput = document.getElementById("new-task"); //Add a new task.
 const addButton = document.getElementsByTagName("button")[0]; //first button
-const incompleteTaskHolder = document.getElementById("incompleteTasks"); //ul of #incompleteTasks
-const completedTasksHolder = document.getElementById("completed-tasks"); //completed-tasks
+const todoList = document.getElementById("incompleteTasks"); //ul of #incompleteTasks
+const completedList = document.getElementById("completed-tasks"); //completed-tasks
 
 //New task list item
-const createNewTaskElement = function (taskString) {
+const createNewTaskElement = function (taskText) {
   const listItem = document.createElement("li");
 
   //input (checkbox)
@@ -27,9 +27,9 @@ const createNewTaskElement = function (taskString) {
 
   //button.delete
   const deleteButton = document.createElement("button"); //delete button
-  const deleteButtonImg = document.createElement("img"); //delete button image
+  const deleteIcon = document.createElement("img"); //delete button image
 
-  label.innerText = taskString;
+  label.innerText = taskText;
   label.className = "task";
 
   //Each elements, needs appending
@@ -41,8 +41,8 @@ const createNewTaskElement = function (taskString) {
   editButton.className = "edit";
 
   deleteButton.className = "delete";
-  deleteButtonImg.src = "./remove.svg";
-  deleteButton.appendChild(deleteButtonImg);
+  deleteIcon.src = "./remove.svg";
+  deleteButton.appendChild(deleteIcon);
 
   //and appending.
   listItem.appendChild(checkBox);
@@ -58,8 +58,8 @@ const addTask = function () {
   if (!taskInput.value) return;
   const listItem = createNewTaskElement(taskInput.value);
 
-  //Append listItem to incompleteTaskHolder
-  incompleteTaskHolder.appendChild(listItem);
+  //Append listItem to todoList
+  todoList.appendChild(listItem);
   bindTaskEvents(listItem);
 
   taskInput.value = "";
@@ -72,17 +72,17 @@ const editTask = function () {
 
   const editInput = listItem.querySelector("input[type=text]");
   const label = listItem.querySelector("label");
-  const editBtn = listItem.querySelector(".edit");
-  const containsClass = listItem.classList.contains("editMode");
+  const editButton = listItem.querySelector(".edit");
+  const isEditMode = listItem.classList.contains("editMode");
   //If class of the parent is .editmode
-  if (containsClass) {
+  if (isEditMode) {
     //switch to .editmode
     //label becomes the inputs value.
     label.innerText = editInput.value;
-    editBtn.innerText = "Edit";
+    editButton.innerText = "Edit";
   } else {
     editInput.value = label.innerText;
-    editBtn.innerText = "Save";
+    editButton.innerText = "Save";
   }
 
   //toggle .editmode on the parent.
@@ -100,7 +100,7 @@ const deleteTask = function () {
 //Move the task between the Todo and Completed lists, depending on the checkbox state.
 const toggleTaskCompletion = function () {
   const listItem = this.parentNode;
-  const targetList = this.checked ? completedTasksHolder : incompleteTaskHolder;
+  const targetList = this.checked ? completedList : todoList;
   targetList.appendChild(listItem);
   bindTaskEvents(listItem);
 };
@@ -125,7 +125,7 @@ const bindTaskEvents = function (taskListItem) {
 };
 
 //Bind events to every preloaded list item, in both lists.
-const taskLists = [incompleteTaskHolder, completedTasksHolder];
+const taskLists = [todoList, completedList];
 for (const taskList of taskLists) {
   for (let i = 0; i < taskList.children.length; i++) {
     bindTaskEvents(taskList.children[i]);
